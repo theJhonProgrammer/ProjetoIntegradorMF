@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Costureiras Disponíveis - Mãos de Fada</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Mãos de Fada</h1>
+    </header>
+
+    <section id="filtro-section">
+        <h2>Costureiras Disponíveis</h2>
+        
+        <label for="servico">Filtrar por tipo de serviço:</label>
+        <select id="servico" name="servico" onchange="filtrarCostureiras()">
+            <option value="todos">Todos</option>
+            <option value="ajuste">Ajuste</option>
+            <option value="confecção">Confecção</option>
+            <option value="bordado">Bordado</option>
+            <option value="reforma">Reforma</option>
+        </select>
+
+        <label for="localizacao">Filtrar por localização:</label>
+        <select id="localizacao" name="localizacao" onchange="filtrarCostureiras()">
+            <option value="todos">Todas as Localizações</option>
+            <option value="morumbi">Morumbi, Cascavel</option>
+            <option value="floresta">Floresta, Cascavel </option>
+            <option value="riviera">Riviera, Cascavel</option>
+            
+        </select>
+    </section>
+
+    <section id="costureiras-section">
+        <div class="costureira-card" data-servico="ajuste" data-localizacao="morumbi">
+            <h3>Maria das Costuras</h3>
+            <p>Serviços: Ajuste</p>
+            <p>Localização: Morumbi</p>
+            <button>Ver Perfil</button>
+        </div>
+        <div class="costureira-card" data-servico="confecção" data-localizacao="floresta">
+            <h3>Ana Bordadeira</h3>
+            <p>Serviços: Confecção</p>
+            <p>Localização: Floresta</p>
+            <button>Ver Perfil</button>
+        </div>
+        <div class="costureira-card" data-servico="bordado" data-localizacao="riviera">
+            <h3>Clara Costureira</h3>
+            <p>Serviços: Bordado</p>
+            <p>Localização: Riviera</p>
+            <button>Ver Perfil</button>
+        </div>
+        
+        <!-- Adicione mais cards de costureiras conforme necessário -->
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Mãos de Fada. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
