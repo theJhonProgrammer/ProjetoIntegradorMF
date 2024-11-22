@@ -9,7 +9,7 @@ function salvarDados(event) {
 
     const dados = {
         username: usuario,
-        nome: nome,
+        first_name: nome,
         email: email,
         telefone: telefone,
         endereco: endereco,

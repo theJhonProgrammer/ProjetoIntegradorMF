@@ -2,13 +2,13 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 
 class Usuario(AbstractUser):
-    username=models.CharField(max_length=200)
-    email = models.EmailField(unique=True)
-    nome = models.CharField(max_length=200)
+    # username=models.CharField(max_length=200)
+    # email = models.EmailField(unique=True)
+    # nome = models.CharField(max_length=200)
     telefone = models.CharField(max_length=11)
     endereco=models.CharField(max_length=200)
 
-    REQUIRED_FIELDS = [ 'email', 'nome','telefone','endereco']
+    REQUIRED_FIELDS = [ 'first_name','email', 'telefone','endereco']
 
     def __str__(self):
         return self.username

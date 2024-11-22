@@ -1,16 +1,28 @@
 from rest_framework import serializers
 from .models import Usuario
+from django.contrib.auth.models import User
+
 from django.contrib.auth.hashers import make_password
 
 class UsuarioSerializer(serializers.ModelSerializer):
+    # define que ela so vai ser escrita e nao lida no get
+    password = serializers.CharField(write_only=True, required=True)
+
     class Meta:
-        model = Usuario
-        fields = ['id', 'username', 'nome',  'email', 'telefone', 'endereco', 'password']
+        model = User
+        # adicionar telefone e endereco denovo na proxima aula vamos ver
+        fields = ['id', 'username', 'first_name',  'password']
         
-        # define que ela so vai ser escrita e nao lida no get
-        extra_kwargs = {'password': {'write_only': True}}
+      
 # O método create criptografa a senha antes de salvar
     def create(self, validated_data):
-        validated_data['password'] = make_password(validated_data['password'])
-        return super().create(validated_data)
+        user = Usuario.objects.create_user(
+            username=validated_data['username'],
+            first_name=validated_data['first_name'],
+            email=validated_data.get('email', ''),
+            password=validated_data['password']
+        )
+        return user
+
+
    
