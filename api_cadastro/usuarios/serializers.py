@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = ['id', 'nome', 'email', 'telefone', 'endereco', 'password']
+        fields = ['id', 'username', 'nome',  'email', 'telefone', 'endereco', 'password']
         
         # define que ela so vai ser escrita e nao lida no get
         extra_kwargs = {'password': {'write_only': True}}
