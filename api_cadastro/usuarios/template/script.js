@@ -15,7 +15,7 @@ function salvarDados(event) {
     };
 
     /* Faz a chamada da api para insercao */
-    fetch('http://localhost:8000/api/cadastro', {
+    fetch('http://localhost:8000/api/cadastro/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
