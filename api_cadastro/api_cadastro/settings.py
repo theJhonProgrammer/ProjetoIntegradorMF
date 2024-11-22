@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-AUTH_USER_MODEL = 'usuarios.Usuario'
+# AUTH_USER_MODEL = 'usuarios.Usuario'
 CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
