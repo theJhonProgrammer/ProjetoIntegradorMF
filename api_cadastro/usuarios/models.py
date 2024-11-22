@@ -7,7 +7,7 @@ class Usuario(AbstractUser):
     telefone = models.CharField(max_length=11)
     endereco=models.CharField(max_length=200)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'nome']
+    REQUIRED_FIELDS = ['username', 'nome','telefone','endereco']
 
     def __str__(self):
         return self.email

@@ -4,12 +4,14 @@ function salvarDados(event) {
     const email = document.getElementById("email").value;
     const telefone = document.getElementById("telefone").value;
     const endereco = document.getElementById("endereco").value;
+    const senha= document.getElementById("senha").value;
 
     const dados = {
         nome: nome,
         email: email,
         telefone: telefone,
-        endereco: endereco
+        endereco: endereco,
+        password: senha
     };
 
     /* Faz a chamada da api para insercao */

@@ -6,6 +6,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = ['id', 'nome', 'email', 'telefone', 'endereco', 'password']
+        # define que ela so vai ser escrita e nao lida no get
         extra_kwargs = {'password': {'write_only': True}}
 # O método create criptografa a senha antes de salvar
     def create(self, validated_data):
