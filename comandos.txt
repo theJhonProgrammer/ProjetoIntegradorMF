@@ -1,0 +1,61 @@
+comandos
+ python3 -m pip install Django djangorestframework
+ python3 -m pip install django-cors-headers
+ django-admin startproject nome_projeto
+ python3 manage.py startapp nome_app
+ vai em settings e coloca o app em instaled apps e o rest_framework
+ cria um urls.py pro app 
+ cria o serializers.py no app
+
+toda vez q criar um modulo
+vai no serializers e importa o models
+vai nas views e importa o models e a serializer
+
+registra urls do modulo no projeto e no app
+no projeto tem que importar o include 
+
+ Atualizando Banco de Dados
+python3 manage.py makemigrations 
+python3 manage.py migrate
+
+python3 manage.py runserver
+
+no insomnia
+POST http://127.0.0.1:8000/api/sistema/autor/
+body -> JSON
+{
+    "nome": "João Silva"
+    "biografia": "Escritora renomada pelo livro salem" 
+}
+send
+biografia e um atributo que pode ser nulo
+
+esse volta tudo
+GET http://127.0.0.1:8000/api/sistema/autor/ 
+
+esse volta so o autor da chave primaria 2
+http://127.0.0.1:8000/api/sistema/autor/2/
+
+
+atualizando o autor do id 2
+PUT http://127.0.0.1:8000/api/sistema/autor/2/
+{
+    "nome": "Erico Verissimo",
+    "biografia": "Escritor renomado do livro brasileiro Ana Terra"
+}
+
+DELETE http://127.0.0.1:8000/api/sistema/autor/3/
+
+ALBUM artista
+POST http://127.0.0.1:8000/api/spotify/album/artista/
+
+{
+  "titulo": "Summer",
+  "ano_publicacao": 2016,
+  "artista": {
+    "nome": "demi lovato",
+    "genero": "POP"
+  }
+}
+
+GET http://127.0.0.1:8000/api/spotify/album/artista/
