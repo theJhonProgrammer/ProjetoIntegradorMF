@@ -10,20 +10,19 @@ from rest_framework.authtoken.models import Token
 
 class CadastroUsuarioView(APIView):
     permission_classes = [AllowAny] # Permite acesso público a este endpoint
-
+ 
     def post(self, request, *args, **kwargs):
         serializer = UsuarioSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            user=serializer.save()
              # Cria o token para o novo usuário
-            
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({"user": serializer.data, "token": token.key}, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UsuarioList(APIView):
-    permission_classes = [AllowAny] #tirar depois
+    # permission_classes = [AllowAny] #tirar depois
     def get(self, request):
         usuarios = User.objects.all()
         serializer = UsuarioSerializer(usuarios, many=True)
