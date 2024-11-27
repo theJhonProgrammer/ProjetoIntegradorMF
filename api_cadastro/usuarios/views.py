@@ -8,9 +8,13 @@ from .serializers import UsuarioSerializer
 from rest_framework.permissions import AllowAny 
 from rest_framework.authtoken.models import Token
 
+from django.shortcuts import render
+
+
 class CadastroUsuarioView(APIView):
     permission_classes = [AllowAny] # Permite acesso público a este endpoint
- 
+    def get(self, request):
+        return render(request, 'usuarios/cadastro.html')
     def post(self, request, *args, **kwargs):
         serializer = UsuarioSerializer(data=request.data)
         if serializer.is_valid():
@@ -22,7 +26,7 @@ class CadastroUsuarioView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UsuarioList(APIView):
-    # permission_classes = [AllowAny] #tirar depois
+    permission_classes = [AllowAny] #tirar depois
     def get(self, request):
         usuarios = User.objects.all()
         serializer = UsuarioSerializer(usuarios, many=True)
