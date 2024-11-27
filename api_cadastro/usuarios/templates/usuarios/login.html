@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Mãos de Fada</title>
     <link rel="shortcut icon" type="imagex/png" href="/icon/botao-de-roupa.ico">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static 'css/styleslog.css' %}">
 </head>
 <body>
     <header>
@@ -15,21 +16,22 @@
     <section id="login-section">
         <h2>Login</h2>
         <form id="login-form">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+            <label for="usuario">Nome do Usuário:</label>
+            <input type="text" id="usuario" name="usuario" placeholder="Digite seu usuário" required>
             
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
             
             
             
             <button type="submit">Entrar</button>
         </form>
-        <p>Ainda não tem uma conta? <a href="/cadastro/cadastro.html">Cadastre-se aqui</a></p>
+        <p>Ainda não tem uma conta? <a href="http://127.0.0.1:8000/api/cadastro/">Cadastre-se aqui</a></p>
     </section>
 
     <footer>
         <p>&copy; 2024 Mãos de Fada. Todos os direitos reservados.</p>
     </footer>
+    <script src="{% static 'js/scriptlog.js' %}"></script>
 </body>
 </html>

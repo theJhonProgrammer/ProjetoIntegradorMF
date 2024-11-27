@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from .serializers import UsuarioSerializer
 from rest_framework.permissions import AllowAny 
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import obtain_auth_token
 
 from django.shortcuts import render
 
@@ -31,3 +32,10 @@ class UsuarioList(APIView):
         usuarios = User.objects.all()
         serializer = UsuarioSerializer(usuarios, many=True)
         return Response(serializer.data)
+
+class LoginView(APIView):
+    permission_classes = [AllowAny] # Permite acesso público a este endpoint
+    def get(self, request):
+        return render(request, 'usuarios/login.html')
+    def post(self, request, *args, **kwargs):
+        return obtain_auth_token
