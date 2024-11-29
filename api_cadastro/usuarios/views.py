@@ -50,7 +50,7 @@ class LoginView(ObtainAuthToken):
         # Retorne a resposta com os dados do token
         return Response({
             'token': token.key,
-            'redirect_url': '/api/cadastro/'
+            'redirect_url': '/api/menu/'
         })
     
 class MenuView(APIView):
