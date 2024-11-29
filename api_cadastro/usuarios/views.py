@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 # from .models import Usuario
 from django.contrib.auth.models import User
 from .serializers import UsuarioSerializer
-from rest_framework.permissions import AllowAny 
+from rest_framework.permissions import AllowAny, IsAuthenticated 
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.shortcuts import render
@@ -54,5 +54,6 @@ class LoginView(ObtainAuthToken):
         })
     
 class MenuView(APIView):
+    permission_classes = [IsAuthenticated] #preciso que ele receba o token para autenticar
     def get(self, request):
         return render(request, 'usuarios/index.html')
