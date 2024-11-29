@@ -52,3 +52,7 @@ class LoginView(ObtainAuthToken):
             'token': token.key,
             'redirect_url': '/api/cadastro/'
         })
+    
+class MenuView(APIView):
+    def get(self, request):
+        return render(request, 'usuarios/index.html')
