@@ -49,5 +49,6 @@ class LoginView(ObtainAuthToken):
 
         # Retorne a resposta com os dados do token
         return Response({
-            'token': token.key
+            'token': token.key,
+            'redirect_url': '/pesquisa/'
         })

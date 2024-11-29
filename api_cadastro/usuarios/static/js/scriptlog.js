@@ -18,8 +18,17 @@ function logar(event) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Success:', data);
-        alert("Dados enviados com sucesso!");
+        if (data.token) {
+            console.log('Login bem-sucedido:', data);
+
+            // Armazena o token no localStorage ou cookie
+            localStorage.setItem('authToken', data.token);
+
+            // Redireciona para a página retornada pelo servidor
+            window.location.href = data.redirect_url;
+        } else {
+            alert('Login falhou.');
+        }
     })
     .catch((error) => {
         console.error('Error:', error);
