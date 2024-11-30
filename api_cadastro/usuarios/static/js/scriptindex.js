@@ -1,3 +1,7 @@
+window.addEventListener("load",()=>{
+    alert("tudo certo ")
+})
+
 // Inicializando o mapa com Cascavel - PR como padrão
 const map = L.map('map').setView([-24.9555, -53.4552], 12); // Coordenadas de Cascavel, PR
 
