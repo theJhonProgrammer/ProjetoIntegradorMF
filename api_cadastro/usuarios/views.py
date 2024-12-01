@@ -54,6 +54,6 @@ class LoginView(ObtainAuthToken):
         })
     
 class MenuView(APIView):
-    permission_classes = [IsAuthenticated] #preciso que ele receba o token para autenticar
+    permission_classes = [AllowAny] #preciso que ele receba o token para autenticar
     def get(self, request):
         return render(request, 'usuarios/index.html')
