@@ -22,8 +22,8 @@ function logar(event) {
             console.log('Login bem-sucedido:', data);
 
             // Armazena o token no localStorage ou cookie
-            localStorage.setItem('authToken', data.token);
-
+            localStorage.setItem('token', data.token);
+            
             // Redireciona para a página retornada pelo servidor
             window.location.href = data.redirect_url;
         } else {

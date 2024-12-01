@@ -9,13 +9,13 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.shortcuts import render
-
+from django.contrib.auth import authenticate
 
 class CadastroUsuarioView(APIView):
     permission_classes = [AllowAny] # Permite acesso público a este endpoint
     def get(self, request):
         return render(request, 'usuarios/cadastro.html')
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         serializer = UsuarioSerializer(data=request.data)
         if serializer.is_valid():
             user=serializer.save()
@@ -36,24 +36,31 @@ class LoginView(ObtainAuthToken):
     permission_classes = [AllowAny] # Permite acesso público a este endpoint
     def get(self, request):
         return render(request, 'usuarios/login.html')
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         # Use a classe serializer da base
         serializer = self.serializer_class(data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
-
-        # Pegue o usuário validado
-        user = serializer.validated_data['user']
+        if serializer.is_valid():
+            user = authenticate(
+                username=serializer.validated_data['username'],
+                password=serializer.validated_data['password']
+            )
+            if user:
+                token, _ = Token.objects.get_or_create(user=user)
+                return Response({
+                    'redirect_url': '/api/pedidos/',
+                    'token': token.key
+                    
+                })
+        return Response({'error': 'Credenciais inválidas'}, 
+                            status=status.HTTP_401_UNAUTHORIZED)
         
-        # Gere ou recupere o token para o usuário
-        token, created = Token.objects.get_or_create(user=user)
-
-        # Retorne a resposta com os dados do token
-        return Response({
-            'token': token.key,
-            'redirect_url': '/api/menu/'
-        })
     
 class MenuView(APIView):
-    permission_classes = [AllowAny] #preciso que ele receba o token para autenticar
+    permission_classes = [AllowAny]
     def get(self, request):
         return render(request, 'usuarios/index.html')
+    
+class PedidosView(APIView):
+    permission_classes = [IsAuthenticated] #preciso que ele receba o token para autenticar
+    def get(self, request):
+        return render(request, 'usuarios/pedidos.html')
