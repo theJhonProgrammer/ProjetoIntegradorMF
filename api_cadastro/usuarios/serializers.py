@@ -3,6 +3,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth.hashers import make_password
+from .models import Agendamento
 
 class UsuarioSerializer(serializers.ModelSerializer):
     # define que ela so vai ser escrita e nao lida no get
@@ -26,5 +27,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
         )
         return user
 
-
-   
+class AgendamentoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agendamento
+        fields = '__all__'

@@ -1,15 +1,16 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.shortcuts import get_object_or_404
 # from .models import Usuario
 from django.contrib.auth.models import User
-from .serializers import UsuarioSerializer
+from .serializers import UsuarioSerializer, AgendamentoSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated 
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate
+from .models import Agendamento
+from django.contrib import messages
 
 class CadastroUsuarioView(APIView):
     permission_classes = [AllowAny] # Permite acesso público a este endpoint
@@ -61,6 +62,36 @@ class MenuView(APIView):
         return render(request, 'usuarios/index.html')
     
 class PedidosView(APIView):
-    permission_classes = [IsAuthenticated] #preciso que ele receba o token para autenticar
+    permission_classes = [AllowAny] #isautenticated nao funciona
     def get(self, request):
-        return render(request, 'usuarios/pedidos.html')
+        agendamentos = Agendamento.objects.all()
+        return render(request, 'usuarios/pedidos.html', {
+            'agendamentos': agendamentos
+    })
+
+    
+    def post(self, request):
+        serializer = AgendamentoSerializer(data=request.data)
+        if serializer.is_valid():
+            ag = serializer.save()
+            return Response({
+                "agendamentos": serializer.data, 
+                "message": "Agendamento adicionado com sucesso!"
+            }, status=status.HTTP_201_CREATED)
+        else:
+            return Response({
+                "errors": serializer.errors, 
+                "message": "Erro ao adicionar agendamento. Verifique os dados."
+            }, status=status.HTTP_400_BAD_REQUEST)
+class PedidosUpdateDeleteView(APIView):       
+    def delete(self, request, pk):
+        ag = get_object_or_404(Agendamento, pk=pk)
+        ag.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
+class AgendamentoList(APIView):
+    permission_classes = [AllowAny] #tirar depois
+    def get(self, request):
+        g = Agendamento.objects.all()
+        serializer = AgendamentoSerializer(g, many=True)
+        return Response(serializer.data)

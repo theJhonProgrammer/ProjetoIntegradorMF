@@ -24,3 +24,30 @@ from django.db import models
 #         related_name='usuario_user_permissions',
 #         blank=True,
 #     )
+
+
+
+
+class Agendamento(models.Model):
+    SERVICO_CHOICES = [
+        ('Ajuste de Vestido', 'Ajuste de Vestido'),
+        ('Costura', 'Costura'),
+        ('Conserto', 'Conserto'),
+        ('Outro', 'Outro')
+    ]
+
+    STATUS_CHOICES = [
+        ('Pendente', 'Pendente'),
+        ('Confirmado', 'Confirmado'),
+        ('Concluído', 'Concluído'),
+        ('Cancelado', 'Cancelado')
+    ]
+
+    data = models.DateField()
+    hora = models.TimeField()
+    cliente = models.CharField(max_length=100)
+    servico = models.CharField(max_length=50, choices=SERVICO_CHOICES)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES)
+    
+    def __str__(self):
+        return f"{self.cliente} - {self.servico}"
