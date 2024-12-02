@@ -11,10 +11,6 @@ body {
     min-height: 100vh;
 }
 
-header h1 {
-    color: #40E0D0;
-    margin-bottom: 20px;
-}
 
 #login-section {
     background-color: white;

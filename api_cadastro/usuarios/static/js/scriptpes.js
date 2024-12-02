@@ -28,8 +28,23 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Preencher o campo de busca com "Cascavel, PR" por padrão
 document.getElementById('location').value = 'Cascavel, PR';
 
+
+L.marker([-24.920475232322964, -53.420102578170535]).addTo(map)
+    .bindPopup("Ana Bordadeira")
+    .openPopup();
+                
+L.marker([-24.91071811097087, -53.41200969681368]).addTo(map)
+    .bindPopup("Clara Costureira")
+    .openPopup();
+    
+m=-24.93491098947162, -53.403921062591365
+L.marker([-24.93491098947162, -53.403921062591365]).addTo(map)
+    .bindPopup("Maria das Costuras")
+    .openPopup();
+
 // Função de busca por região usando a API Nominatim
 function searchLocation() {
+    
     const location = document.getElementById('location').value;
     if (!location) {
         alert('Por favor, insira uma região.');
@@ -46,6 +61,15 @@ function searchLocation() {
                 L.marker([lat, lon]).addTo(map)
                     .bindPopup(`Local: ${display_name}`)
                     .openPopup();
+                
+                L.circle([lat, lon], {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.5,
+                    radius: 500
+                }).addTo(map);
+
+                
             } else {
                 alert('Localização não encontrada.');
             }
@@ -55,3 +79,4 @@ function searchLocation() {
             alert('Erro ao buscar localização. Tente novamente.');
         });
 }
+
