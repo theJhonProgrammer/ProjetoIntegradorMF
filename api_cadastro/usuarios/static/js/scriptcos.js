@@ -64,23 +64,101 @@ function excluir(event){
   // Obtém o ID da linha (adapte o seletor conforme sua estrutura HTML)
     const id = linha.querySelector('td:first-child').textContent;
     
-    fetch(`http://localhost:8000/api/pedidos/${id}`, {
-        method: 'DELETE',
+    fetch(`http://localhost:8000/api/pedidos/${id}/`, {
+        method: 'DELETE'
         
     })
-    .then(response => {
-        if (!response.ok) {
-          throw new Error('Erro ao excluir linha');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Remove a linha da tabela (opcional)
-        linha.remove();
-        console.log('Linha excluída com sucesso:', data);
-      })
-      .catch(error => {
-        console.error('Erro:', error);
-      });
+    .then(response => response)
+    .then(data => {
+      // Remove a linha da tabela (opcional)
+      linha.remove();
+      // location.reload();
+      console.log('Linha excluída com sucesso:', data);
+    })
+    .catch(error => {
+      console.log(data)
+      console.error('Erro:', error);
+    });
     
+}
+
+
+function editar(event) {
+  const botao = document.getElementById('botaosalvar');
+  botao.classList.remove('disabled');
+
+  const linha = event.target.closest('tr');
+  const celulasEditaveis = linha.querySelectorAll('.editable');
+  
+
+  celulasEditaveis.forEach(celula => {
+      celula.contentEditable = true;
+  });
+
+}
+
+function salvar(event) {
+  
+  const linha = event.target.parentNode.parentNode;
+
+   // Obtém o ID da linha (adapte o seletor conforme sua estrutura HTML)
+  const id = linha.querySelector('td:first-child').textContent;
+  const novadata= linha.querySelector('td:nth-child(2)').textContent;
+  const novahora = linha.querySelector('td:nth-child(3)').textContent;
+  const novocliente = linha.querySelector('td:nth-child(4)').textContent;
+  const novoservico = linha.querySelector('td:nth-child(5)').textContent;
+  const novostatus= linha.querySelector('td:nth-child(6)').textContent;
+  
+  const partes = novadata.split('/');
+  const dia = partes[0];
+  const mes = partes[1];
+  const ano = partes[2];
+
+  // Reconstrói a data no formato yyyy-MM-dd
+  const dataFormatada = `${ano}-${mes}-${dia}`;
+
+  const parteshora = novahora.split(' ');
+  const horaMinutos = parteshora[0].split(':');
+  const ampm = partes[1].toUpperCase();
+
+  let hora = parseInt(horaMinutos[0]);
+  const minutos = horaMinutos[1];
+  
+  // Ajustar a hora para o formato de 24 horas
+  if (ampm === 'PM' && hora !== 12) {
+    hora += 12;
+  } else if (ampm === 'AM' && hora === 12) {
+    hora = 0;
+  }
+
+  // Formatar a hora no formato "HH:mm:ss"
+  const hora24 = hora.toString().padStart(2, '0') + ':' + minutos + ':00';
+
+  const dados = {
+    data: dataFormatada,
+    hora : hora24 ,
+    cliente: novocliente ,
+    servico: novoservico,
+    status: novostatus
+  };
+
+  fetch(`http://localhost:8000/api/pedidos/${id}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dados)
+  })
+  .then(response => response)
+  .then(data => {
+    console.log('Agendamento atualizado com sucesso:', data);
+    // Opcional: Remover o atributo contenteditable para evitar edições acidentais
+    linha.querySelectorAll('td:not(:last-child)').forEach(td => {
+      td.contentEditable = false;
+    });
+    location.reload()
+  })
+  .catch(error => {
+    console.error('Erro:', error);
+  });
 }

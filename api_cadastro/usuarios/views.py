@@ -83,11 +83,21 @@ class PedidosView(APIView):
                 "errors": serializer.errors, 
                 "message": "Erro ao adicionar agendamento. Verifique os dados."
             }, status=status.HTTP_400_BAD_REQUEST)
-class PedidosUpdateDeleteView(APIView):       
+class PedidosUpdateDeleteView(APIView):  
+    permission_classes = [AllowAny] #isautenticated nao funciona
     def delete(self, request, pk):
         ag = get_object_or_404(Agendamento, pk=pk)
         ag.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, pk):
+        ag = get_object_or_404(Agendamento, pk=pk)
+        print(request.data)
+        serializer = AgendamentoSerializer(ag, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 class AgendamentoList(APIView):
     permission_classes = [AllowAny] #tirar depois

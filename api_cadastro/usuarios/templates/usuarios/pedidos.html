@@ -53,12 +53,13 @@
               {% for agendamento in agendamentos %}
               <tr>
                   <td>{{ agendamento.id }}</td>
-                  <td>{{ agendamento.data|date:"d/m/Y" }}</td>
-                  <td>{{ agendamento.hora }}</td>
-                  <td>{{ agendamento.cliente }}</td>
-                  <td>{{ agendamento.servico }}</td>
-                  <td>{{ agendamento.status }}</td>
-                  <td><button class="btn btn-light">Editar</button></td>
+                  <td class="editable" contenteditable="false" >{{ agendamento.data|date:"d/m/Y" }}</td>
+                  <td class="editable" contenteditable="false">{{ agendamento.hora }}</td>
+                  <td class="editable" contenteditable="false">{{ agendamento.cliente }}</td>
+                  <td class="editable" contenteditable="false">{{ agendamento.servico }}</td>
+                  <td class="editable" contenteditable="false">{{ agendamento.status }}</td>
+                  <td><button onclick="editar(event)" class="btn btn-light">Editar</button></td>
+                  <td><a onclick="salvar(event)" class="btn btn-light save-btn  disabled" role="button" aria-disabled="true" id="botaosalvar">Salvar</a></td>
                   <td><button onclick="excluir(event)" class="btn btn-light">Excluir</button></td>
               </tr>
               {% endfor %}
@@ -66,7 +67,7 @@
         </table>
     </section>
 
-      
+    
     <div  id="agendamentos-section"  aria-labelledby="addAppointmentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
