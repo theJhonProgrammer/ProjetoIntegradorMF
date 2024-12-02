@@ -105,3 +105,8 @@ class AgendamentoList(APIView):
         g = Agendamento.objects.all()
         serializer = AgendamentoSerializer(g, many=True)
         return Response(serializer.data)
+    
+class PesquisaView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        return render(request, 'usuarios/pesquisa.html')
