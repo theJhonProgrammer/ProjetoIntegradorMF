@@ -35,7 +35,7 @@
       </nav>
     </div>
 
-    <section id="filtro-section">
+    <!-- <section id="filtro-section">
         <h2>Costureiras Disponíveis</h2>
         
         <label for="servico">Filtrar por tipo de serviço:</label>
@@ -75,20 +75,37 @@
             <p>Serviços: Bordado</p>
             <p>Localização: Riviera</p>
             <button>Ver Perfil</button>
-        </div>
+        </div> -->
         
         <!-- Adicione mais cards de costureiras conforme necessário -->
     </section>
 
-    <section id="hero">
-        <h2>Encontre a costureira perfeita para você!</h2>
+        
+        <section id="hero">
+        <h2>Costureiras Disponíveis</h2>
+        <label for="servico">Filtrar por tipo de serviço:</label>
+        <select id="servico" name="servico" onchange="app.filtrarCostureiras()"></select>
+        <label for="localizacao">Filtrar por localização:</label>
+        <select id="localizacao" name="localizacao" onchange="app.filtrarCostureiras()"></select>
+        <div id="map"></div>
+        <h2>Digite a sua região</h2>
         <section id="search">
             <input type="text" id="location" placeholder="Digite a região (ex: Centro)">
             <button onclick="searchLocation()">Buscar</button>
         </section>
-        <div id="map"></div>
-    </section>
+      </section>
+    
+      <section id="costureiras-section"></section>
 
+      <!-- Modal -->
+      <div id="modal" class="modal">
+          <div class="modal-content">
+              <button class="modal-close" onclick="app.fecharModal()">Fechar</button>
+              <div id="modal-content-body"></div>
+          </div>
+      </div>
+  
+      
 
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
