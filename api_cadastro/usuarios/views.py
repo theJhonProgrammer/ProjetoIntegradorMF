@@ -11,6 +11,8 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate
 from .models import Agendamento
 from django.contrib import messages
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import authentication_classes, permission_classes 
 
 class CadastroUsuarioView(APIView):
     permission_classes = [AllowAny] # Permite acesso público a este endpoint
@@ -34,7 +36,8 @@ class UsuarioList(APIView):
         return Response(serializer.data)
 
 class LoginView(ObtainAuthToken):
-    permission_classes = [AllowAny] # Permite acesso público a este endpoint
+    @authentication_classes([TokenAuthentication])
+    @permission_classes([IsAuthenticated]) # Permite acesso público a este endpoint
     def get(self, request):
         return render(request, 'usuarios/login.html')
     def post(self, request):
